@@ -1,0 +1,106 @@
+body {
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  background-color: #f5f9ff;
+  margin: 0;
+  padding: 20px;
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.container {
+  background: white;
+  border-radius: 10px;
+  box-shadow: 0 4px 15px rgba(74, 145, 209, 0.2);
+  width: 100%;
+  max-width: 400px;
+  padding: 30px;
+  transition: all 0.3s ease;
+  border: 2px solid #6db9ef;
+}
+
+h1 {
+  color: #2c3e50;
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.form-group {
+  margin-bottom: 20px;
+}
+
+label {
+  display: block;
+  margin-bottom: 5px;
+  color: #3a5169;
+  font-weight: 500;
+}
+
+input {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid #d4e3f0;
+  border-radius: 5px;
+  font-size: 16px;
+  box-sizing: border-box;
+  background-color: #f9fcfd;
+  transition: border 0.3s ease;
+}
+
+input:focus {
+  outline: none;
+  border-color: #4a91d1;
+  box-shadow: 0 0 0 2px rgba(74, 145, 209, 0.2);
+}
+
+button {
+  background: linear-gradient(to right, #6db9ef, #4a91d1);
+  color: white;
+  border: none;
+  padding: 12px;
+  width: 100%;
+  border-radius: 5px;
+  font-size: 16px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+button:hover {
+  background: linear-gradient(to right, #5aa8e0, #3c81c0);
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(74, 145, 209, 0.3);
+}
+
+.error {
+  color: #e74c3c;
+  font-size: 14px;
+  margin-top: 5px;
+  display: none;
+}
+
+.remember-forgot {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 15px 0;
+}
+
+.remember-me {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 14px;
+  color: #5d6d7e;
+}
+
+.forgot-password {
+  font-size: 14px;
+  color: #4a91d1;
+  text-decoration: none;
+}
+
+.forgot-password:hover {
+  text-decoration: underline;
+}

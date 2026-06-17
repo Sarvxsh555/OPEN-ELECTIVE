@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Open Elective Course Selection</title>
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- Font Awesome -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="courseSelection.css" />
+  </head>
+  <body class="bg-gray-50 min-h-screen">
+    <!-- Header -->
+   <header class="bg-gradient-to-r from-blue-600 to-indigo-700 text-white shadow-lg relative">
+  <div class="container mx-auto px-4 py-6 flex flex-col md:flex-row md:items-center">
+    <!-- Left: Student Info -->
+    <div class="flex-1 flex items-center">
+      <div id="studentInfo" class="text-white text-lg font-semibold"></div>
+    </div>
+
+    <!-- Center: Main Title -->
+    <div class="flex-1 flex justify-center">
+      <h1 class="text-3xl font-bold">Open Elective Course Selection</h1>
+    </div>
+
+    <!-- Right: (empty or add other controls) -->
+    <div class="flex-1 flex justify-end"></div>
+  </div>
+  <button 
+    id="logoutBtn"
+    class="bg-red-500 text-white py-2 px-4 rounded-lg font-semibold hover:bg-red-600 transition-colors absolute top-6 right-6 z-50"
+  >
+    Logout
+  </button>
+</header>
+
+    <div class="container mx-auto px-4 pt-5 pb-1">
+      <h2 class="text-black-700 text-center text-base font-semibold">
+        Choose your open elective courses
+      </h2>
+    </div>
+    <!-- Main -->
+    <main class="container mx-auto px-4 py-8">
+      <div class="flex flex-col lg:flex-row gap-8">
+        <!-- Course Grid -->
+        <div class="lg:w-2/3">
+          <div class="mb-6">
+            <h2 class="text-2xl font-bold text-gray-800 mb-4">
+              Available Courses
+            </h2>
+            <div class="flex flex-wrap items-center gap-3 mb-4">
+              <label for="sessionSelect" class="text-sm font-medium text-gray-700">
+                Session:
+              </label>
+              <select id="sessionSelect" class="border rounded-md px-3 py-1 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500">
+  <option value="" disabled selected>Select Session</option>
+</select>
+
+            </div>
+            <!-- Filters -->
+            <div id="filterBar" class="flex flex-wrap gap-3 mb-6"></div>
+          </div>
+
+          <!-- Course Cards -->
+          <div
+            id="courseGrid"
+            class="grid grid-cols-1 md:grid-cols-2 gap-6"
+          ></div>
+        </div>
+
+        <!-- Selected Course Summary -->
+        <div class="lg:w-1/3">
+          <div class="bg-white rounded-xl shadow-lg p-6 sticky top-6 relative">
+            <!-- Submit & Refresh buttons at top-right -->
+            <div class="absolute top-4 right-4 flex gap-2">
+              <button
+                id="changeBtn"
+                class="bg-yellow-500 text-white py-2 px-4 rounded-lg font-semibold hover:bg-yellow-600 transition-colors"
+              >
+                Change
+              </button>
+
+              <button
+                id="submitBtn"
+                class="bg-green-600 text-white py-2 px-4 rounded-lg font-semibold hover:bg-green-700 transition-colors"
+              >
+                Submit
+              </button>
+            </div>
+
+            <h3 class="text-xl font-bold text-gray-800 mb-4">Your Selection</h3>
+
+            <div id="selectedCourse" class="text-center py-8">
+              <div class="text-gray-400 mb-4">
+                <i class="fas fa-book-open text-4xl"></i>
+              </div>
+              <p class="text-gray-500">No course selected yet</p>
+              <p class="text-sm text-gray-400 mt-2">
+                Select a course from the list and click Submit
+              </p>
+            </div>
+
+            <div id="selectionDetails" class="hidden">
+              <div class="rounded-lg p-4 mb-4">
+                <h4
+                  id="selectedCourseTitle"
+                  class="font-semibold text-blue-800"
+                ></h4>
+                <p
+                  id="selectedCourseInstructor"
+                  class="text-sm text-blue-600 mt-1"
+                ></p>
+                <p
+                  id="selectedCourseDetails"
+                  class="text-xs text-blue-500 mt-2"
+                ></p>
+              </div>
+            </div>
+
+            <div id="enrolledList" class="mt-4">
+              <div class="flex items-center mb-2">
+                <span class="inline-flex items-center justify-center w-6 h-6 rounded-full bg-green-500 text-white text-xs font-bold mr-2">
+                  ✓
+                </span>
+                <h3 class="text-sm font-semibold text-green-700 uppercase tracking-wide">
+                  Course Enrolled
+                </h3>
+              </div>
+              <div class="bg-green-50 border border-green-300 rounded-lg px-3 py-2">
+                <ul id="enrolledCoursesList" class="text-sm text-green-900 font-medium"></ul>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <!-- Custom JS -->
+    <script src="courseSelection.js"></script>
+  </body>
+</html>

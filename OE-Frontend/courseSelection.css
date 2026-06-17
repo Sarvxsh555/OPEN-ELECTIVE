@@ -1,0 +1,48 @@
+.course-card {
+  transition: all 0.3s ease;
+  border: 2px solid transparent;
+}
+.course-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+}
+.course-card.selected {
+  border-color: #3b82f6;
+  background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%);
+}
+
+.radio-custom {
+  width: 20px;
+  height: 20px;
+  border: 2px solid #d1d5db;
+  border-radius: 50%;
+  display: inline-block;
+  position: relative;
+  cursor: pointer;
+}
+input[type="radio"]:checked + .radio-custom {
+  border-color: #3b82f6;
+  background-color: #3b82f6;
+}
+input[type="radio"]:checked + .radio-custom::after {
+  content: "";
+  position: absolute;
+  top: 4px;
+  left: 4px;
+  width: 8px;
+  height: 8px;
+  background: white;
+  border-radius: 50%;
+}
+input[type="radio"] {
+  position: absolute;
+  opacity: 0;
+}
+
+.dept-pill {
+  min-width: 90px;
+  text-align: center;
+}
+
+/* minor adjustments */
+#enrolledList { border-top: 1px solid #eef2ff; padding-top: 12px; margin-top: 12px; }

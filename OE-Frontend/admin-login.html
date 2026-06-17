@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Admin Login - Open Elective</title>
+    <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+    <div class="container">
+        <h1>Admin Panel Login</h1>
+
+        <form id="adminLoginForm">
+            <div class="form-group">
+                <label for="email">Admin Email</label>
+                <input type="email" id="email" required />
+            </div>
+
+            <div class="form-group">
+                <label for="password">Password</label>
+                <input type="password" id="password" required />
+            </div>
+
+            <div class="form-group" style="display: flex; align-items: center; justify-content: center; gap: 8px;">
+                <input type="checkbox" id="adminCaptcha" required style="width: auto;">
+                <label for="adminCaptcha" style="margin-bottom: 0;">I am not a robot</label>
+            </div>
+            
+            <div id="loginError" class="error"></div>
+
+            <button type="submit">Sign In as Admin</button>
+            <br>
+        </form>
+    </div>
+    <script src="admin-login.js"></script>
+</body>
+</html>

@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Admin Dashboard</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+  </head>
+
+  <body class="bg-gray-100">
+    <div class="flex h-screen">
+
+      <!-- SIDEBAR -->
+      <nav class="w-64 bg-gray-800 text-white p-5">
+        <h2 class="text-xl font-bold mb-6">Menu</h2>
+        <ul>
+          <li class="mb-3"><a href="#viewcourses" class="hover:text-blue-400">View Courses</a></li>
+          <li class="mb-3"><a href="#managecourse" class="hover:text-blue-400">Manage Courses</a></li>
+          <li class="mb-3"><a href="#downloads" class="hover:text-blue-400">Downloads</a></li>
+          <li class="mb-3"><a href="#studentEnrollments" class="hover:text-blue-400">Student Enrollments</a></li>
+          <li class="mb-3"><a href="#excelSection" class="hover:text-blue-400">Excel</a></li>
+        </ul>
+      </nav>
+
+      <!-- MAIN CONTENT -->
+      <div class="flex flex-col flex-grow">
+
+        <!-- HEADER -->
+        <div class="flex justify-between items-center mb-6 p-6 bg-white shadow">
+
+          <!-- LEFT -->
+          <div class="flex flex-col">
+            <div class="flex items-center mb-2">
+              <label class="mr-2 text-sm font-medium text-gray-700">Academic Year:</label>
+              <input type="number" id="startYear" class="border rounded px-3 py-1 text-sm w-20" min="2000" max="2100" />
+              <span class="mx-1 text-lg font-semibold">-</span>
+              <input type="number" id="endYear" class="border rounded px-3 py-1 text-sm w-20" min="2000" max="2100" />
+            </div>
+
+            <div class="flex items-center">
+              <label for="adminSessionSelect" class="mr-2 text-sm font-medium text-gray-700">Session:</label>
+              <select id="adminSessionSelect" class="border rounded px-3 py-1 text-sm w-44">
+                <option value="OS">Odd Semester (OS)</option>
+                <option value="ES">Even Semester (ES)</option>
+              </select>
+
+            </div>
+          </div>
+
+          <!-- CENTER -->
+          <h1 class="text-3xl font-bold text-center flex-1">Admin Dashboard</h1>
+
+          <!-- RIGHT -->
+          <a href="#" id="logoutBtn" class="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600">Logout</a>
+        </div>
+
+        <!-- SCROLLABLE CONTENT -->
+        <div class="p-6 overflow-auto flex-grow bg-gray-100">
+
+          <!-- WARNING BEFORE SESSION IS SET -->
+          <div id="sessionWarning"
+            class="bg-yellow-100 text-yellow-800 p-4 rounded mb-6 text-center text-lg font-semibold">
+            ⚠ Please enter Academic Year and select Session to continue.
+          </div>
+
+          <!-- HIDDEN UNTIL SESSION IS SET -->
+          <div id="sessionContent" style="display:none;">
+
+            <!-- COURSES SECTION -->
+            <div class="bg-white p-6 rounded-lg shadow-md mb-8" id="viewcourses">
+              <h2 class="text-2xl font-semibold mb-6">Courses</h2>
+
+              <div class="overflow-x-auto mb-10">
+                <table class="min-w-full bg-white">
+                  <thead class="bg-gray-200">
+                    <tr>
+                      <th class="py-2 px-4 border-b">ID</th>
+                      <th class="py-2 px-4 border-b">Code</th>
+                      <th class="py-2 px-4 border-b">Course Title</th>
+                      <th class="py-2 px-4 border-b">Instructor</th>
+                      <th class="py-2 px-4 border-b">Department</th>
+                      <th class="py-2 px-4 border-b">Enrolled/Capacity</th>
+                      <th class="py-2 px-4 border-b">Restricted</th>
+                      <th class="py-2 px-4 border-b">Actions</th>
+                      <th class="py-2 px-4 border-b">Download</th>
+                    </tr>
+                  </thead>
+                  <tbody id="coursesTableBody"></tbody>
+                </table>
+              </div>
+
+              <!-- ADD COURSE + ENROLLMENT -->
+              <div class="flex flex-row gap-8 mb-12" id="managecourse">
+
+                <!-- ADD COURSE -->
+                <div class="flex-1 p-4 bg-white rounded shadow">
+                  <h3 class="text-xl font-semibold mb-3">Add New Course</h3>
+                  <form id="addCourseForm" class="space-y-4">
+
+                    <input type="text" id="title" placeholder="Course Title" class="w-full p-2 border rounded" required />
+                    <input type="text" id="code" placeholder="Course Code" class="w-full p-2 border rounded" required />
+                    <input type="text" id="instructor" placeholder="Instructor" class="w-full p-2 border rounded" required />
+
+                    <select id="department" class="w-full p-2 border rounded" required>
+                      <option disabled selected>Offering Department</option>
+                      <option value="CS">CS</option>
+                      <option value="IT">IT</option>
+                      <option value="EE">EE</option>
+                      <option value="EC">EC</option>
+                      <option value="ME">ME</option>
+                      <option value="AD">AD</option>
+                      <option value="CH">CH</option>
+                      <option value="BT">BT</option>
+                      <option value="AE">AE</option>
+                      <option value="MA">MA</option>
+                    </select>
+
+                    <input type="number" id="capacity" placeholder="Capacity" class="w-full p-2 border rounded" required />
+
+                    <select id="restricted" class="w-full p-2 border rounded" required>
+                      <option disabled selected>Restricted Department</option>
+                      <option>CS/IT/AD</option>
+                      <option>EE</option>
+                      <option>EC</option>
+                      <option>BT</option>
+                      <option>AE</option>
+                      <option>CH</option>
+                      <option>ME/MN</option>
+                      <option value="">none</option>
+                    </select>
+
+                    <button type="submit"
+                      class="w-full bg-green-500 text-white p-2 rounded hover:bg-green-600">Add Course</button>
+                  </form>
+                </div>
+
+                <!-- MANUAL ENROLLMENT -->
+                <div class="flex-1 p-4 bg-white rounded shadow">
+                  <h3 class="text-lg font-semibold mb-2">Manual Student Enrollment</h3>
+
+                  <form id="adminEnrollForm" class="space-y-4">
+                    <input type="email" id="adminEnrollEmail" placeholder="Student Email"
+                      class="w-full border p-2 rounded" required />
+                    <input type="text" id="adminEnrollCourseCode" placeholder="Course Code"
+                      class="w-full border p-2 rounded uppercase" required />
+
+                    <button type="submit"
+                      class="w-full bg-blue-600 text-white p-2 rounded hover:bg-blue-700">Add Enrollment</button>
+                  </form>
+                </div>
+
+              </div>
+            </div>
+
+            <!-- DOWNLOADS -->
+            <div class="bg-white p-6 rounded-lg shadow-md mb-8" id="downloads">
+              <h2 class="text-2xl font-semibold mb-4">Downloads</h2>
+
+              <div class="space-y-6">
+
+                <!-- 1 DOWNLOAD ALL -->
+                <div class="flex flex-col md:flex-row md:justify-between md:items-center gap-3 border-b pb-4">
+                  <div class="flex-1">
+                    <p class="font-medium">Download all enrollments</p>
+                    <p class="text-sm text-gray-500">Group and download as PDF/Excel</p>
+                  </div>
+
+                  <div class="flex flex-col md:flex-row md:items-center gap-2">
+                    <select id="downloadAllGroupBy" class="border rounded px-3 py-2 text-sm w-40">
+                      <option value="dept" selected>Group by Department</option>
+                      <option value="course">Group by Course</option>
+                    </select>
+
+                    <div class="flex gap-2">
+                      <button id="downloadAllPdfBtn"
+                        class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 text-sm">PDF</button>
+                      <button id="downloadAllExcelBtn"
+                        class="bg-emerald-600 text-white px-4 py-2 rounded hover:bg-emerald-700 text-sm">Excel</button>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- 2 ENROLLED BY DEPT -->
+                <div class="flex flex-col md:flex-row md:justify-between md:items-center gap-3 border-b pb-4">
+                  <div class="flex-1">
+                    <p class="font-medium">Download enrolled by department</p>
+                  </div>
+
+                  <div class="flex flex-col md:flex-row md:items-center gap-2">
+                    <select id="enrolledDeptSelect" class="border rounded px-3 py-2 text-sm w-40">
+                      <option value="">All departments</option>
+                      <option value="CS">CS</option><option value="IT">IT</option><option value="EE">EE</option>
+                      <option value="EC">EC</option><option value="ME">ME</option><option value="AD">AD</option>
+                      <option value="CH">CH</option><option value="BT">BT</option><option value="AE">AE</option>
+                      <option value="MA">MA</option>
+                    </select>
+
+                    <div class="flex gap-2">
+                      <button id="downloadEnrolledDeptPdfBtn"
+                        class="bg-indigo-600 text-white px-4 py-2 rounded hover:bg-indigo-700 text-sm">PDF</button>
+                      <button id="downloadEnrolledDeptExcelBtn"
+                        class="bg-emerald-600 text-white px-4 py-2 rounded hover:bg-emerald-700 text-sm">Excel</button>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- 3 NOT ENROLLED -->
+                <div class="flex flex-col md:flex-row md:justify-between md:items-center gap-3">
+                  <div class="flex-1">
+                    <p class="font-medium">Download NOT enrolled by department</p>
+                  </div>
+
+                  <div class="flex flex-col md:flex-row md:items-center gap-2">
+                    <select id="notEnrolledDeptSelect" class="border rounded px-3 py-2 text-sm w-40">
+                      <option value="">All departments</option>
+                      <option value="CS">CS</option><option value="IT">IT</option><option value="EE">EE</option>
+                      <option value="EC">EC</option><option value="ME">ME</option><option value="AD">AD</option>
+                      <option value="CH">CH</option><option value="BT">BT</option><option value="AE">AE</option>
+                      <option value="MA">MA</option>
+                    </select>
+
+                    <div class="flex gap-2">
+                      <button id="downloadNotEnrolledDeptPdfBtn"
+                        class="bg-gray-700 text-white px-4 py-2 rounded hover:bg-gray-800 text-sm">PDF</button>
+                      <button id="downloadNotEnrolledDeptExcelBtn"
+                        class="bg-emerald-600 text-white px-4 py-2 rounded hover:bg-emerald-700 text-sm">Excel</button>
+                    </div>
+                  </div>
+                </div>
+
+              </div>
+            </div>
+
+            <!-- STUDENT ENROLLMENTS -->
+            <div class="bg-white p-6 rounded-lg shadow-md mb-6" id="studentEnrollments">
+              <h2 class="text-2xl font-semibold mb-4">Student Enrollments</h2>
+
+              <div class="flex justify-end mb-4">
+                <input id="enrollmentSearch" type="text"
+                  placeholder="Search by Register No (e.g.: 2127240801070)"
+                  class="w-full md:w-1/3 px-3 py-2 border rounded shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500" />
+              </div>
+
+              <div class="overflow-x-auto">
+                <table class="min-w-full bg-white">
+                  <thead class="bg-gray-200">
+                    <tr>
+                      <th class="py-2 px-4 border-b">Register No</th>
+                      <th class="py-2 px-4 border-b">Student Name</th>
+                      <th class="py-2 px-4 border-b">Email</th>
+                      <th class="py-2 px-4 border-b">Department</th>
+                      <th class="py-2 px-4 border-b">Course Code</th>
+                      <th class="py-2 px-4 border-b">Course Title</th>
+                      <th class="py-2 px-4 border-b">Actions</th>
+                    </tr>
+                  </thead>
+                  <tbody id="enrollmentsTableBody"></tbody>
+                </table>
+              </div>
+            </div>
+
+            <!-- EXCEL MANAGEMENT -->
+            <div class="bg-white p-6 rounded-lg shadow-md mb-8" id="excelSection">
+              <h2 class="text-2xl font-semibold mb-4">Excel Management</h2>
+
+              <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-6">
+
+                <div class="space-y-6">
+
+                  <div>
+                    <p class="text-sm font-medium mb-1">Upload student details</p>
+                    <div class="flex items-center gap-3">
+                      <input id="studentFile" type="file" class="border rounded px-3 py-2 w-64" />
+                      <button id="uploadStudentsBtn"
+                        class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">Upload</button>
+                    </div>
+                  </div>
+
+                  <div>
+                    <p id="courseUploadLabel" class="text-sm font-medium mb-1">Upload course details for Odd semester</p>
+                    <div class="flex items-center gap-3">
+                      <input id="courseFile" type="file" class="border rounded px-3 py-2 w-64" />
+                      <button id="uploadCoursesBtn"
+                        class="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700">Upload</button>
+                    </div>
+                  </div>
+
+                </div>
+
+                <div class="flex flex-col gap-3 md:items-stretch md:self-center">
+                  <button id="truncateStudents" class="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600">
+                    Truncate Students
+                  </button>
+                  <button id="truncateCourses" class="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600">
+                    Truncate Courses
+                  </button>
+                  <button id="truncateEnrollments" class="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600">
+                    Truncate Enrollments
+                  </button>
+                </div>
+
+              </div>
+            </div>
+
+          </div> <!-- END sessionContent -->
+
+        </div>
+      </div>
+    </div>
+
+    <!-- TRUNCATE CONFIRM MODAL -->
+    <div id="truncateConfirmModal"
+      class="fixed inset-0 bg-gray-600 bg-opacity-50 flex items-center justify-center hidden">
+      <div class="bg-white p-6 rounded-lg shadow-xl w-full max-w-md">
+        <h2 class="text-xl font-bold mb-4">Confirm Truncate</h2>
+
+        <p class="text-sm text-red-600 mb-4">
+          This will delete <span id="truncateTargetLabel" class="font-semibold"></span> for the selected session.
+        </p>
+
+        <form id="truncateConfirmForm" class="space-y-3">
+          <input type="email" id="truncateEmail" class="w-full border p-2 rounded" placeholder="Admin email" required />
+          <input type="password" id="truncatePassword" class="w-full border p-2 rounded" placeholder="Admin password"
+            required />
+
+          <div class="flex justify-end gap-2 pt-2">
+            <button type="button" id="truncateCancelBtn"
+              class="px-4 py-2 rounded bg-gray-500 text-white hover:bg-gray-600">Cancel</button>
+            <button type="submit" class="px-4 py-2 rounded bg-red-600 text-white hover:bg-red-700">
+              Confirm Truncate
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <!-- EDIT COURSE MODAL -->
+    <div id="editCourseModal"
+      class="fixed inset-0 bg-gray-600 bg-opacity-50 flex items-center justify-center hidden">
+      <div class="bg-white p-8 rounded-lg shadow-xl w-1/3">
+
+        <h2 class="text-2xl font-bold mb-4">Edit Course</h2>
+
+        <form id="editCourseForm" class="space-y-4">
+          <input type="hidden" id="editCourseId" />
+
+          <div>
+            <label class="block text-sm font-medium text-gray-700">Course Title</label>
+            <input type="text" id="editTitle" class="mt-1 w-full p-2 border rounded" />
+          </div>
+
+          <div>
+            <label class="block text-sm font-medium text-gray-700">Instructor</label>
+            <input type="text" id="editInstructor" class="mt-1 w-full p-2 border rounded" />
+          </div>
+
+          <div>
+            <label class="block text-sm font-medium text-gray-700">Capacity</label>
+            <input type="number" id="editCapacity" class="mt-1 w-full p-2 border rounded" />
+          </div>
+
+          <div class="flex justify-end space-x-4 mt-6">
+
+            <button type="button" id="deleteCourseBtn"
+              class="bg-red-600 text-white px-4 py-2 rounded hover:bg-red-700">Delete Course</button>
+
+            <button type="button" id="cancelEditBtn"
+              class="bg-gray-500 text-white px-4 py-2 rounded hover:bg-gray-600">Cancel</button>
+
+            <button type="submit"
+              class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">Save Changes</button>
+
+          </div>
+
+        </form>
+      </div>
+    </div>
+
+    <script src="admin-dashboard.js"></script>
+  </body>
+</html>
